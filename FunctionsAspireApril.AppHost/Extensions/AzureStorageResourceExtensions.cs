@@ -14,7 +14,7 @@ namespace FunctionsAspireApril.AppHost.Extensions
         {
             return storage.ConfigureInfrastructure(infra =>
             {
-                var sa = infra.GetProvisionableResources().OfType<StorageAccount>().FirstOrDefault();
+                var sa = infra.GetProvisionableResources().OfType<StorageAccount>().FirstOrDefault()!;
                 sa.AllowBlobPublicAccess = false;
             });
         }
