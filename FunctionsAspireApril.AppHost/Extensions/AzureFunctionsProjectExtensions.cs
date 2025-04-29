@@ -27,6 +27,7 @@ namespace FunctionsAspireApril.AppHost.Extensions
 
                 var appWithKind = new ContainerAppWithKind(app.BicepIdentifier);
                 appWithKind.Kind = "functionapp";
+                appWithKind.ResourceVersion = "2024-10-02-preview";
                 appWithKind.Name = builder.Resource.Name;
                 appWithKind.Identity = new ManagedServiceIdentity() { ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned };
                 appWithKind.Identity.UserAssignedIdentities.Add(new InterpolatedStringExpression([new IdentifierExpression(builder.Resource.Name + "_identity_outputs_id")]).ToString(), new UserAssignedIdentityDetails());
