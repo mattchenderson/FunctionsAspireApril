@@ -25,10 +25,10 @@ namespace FunctionsAspireApril.AppHost.Extensions
                 var paramRegistryIdentity = new BicepOutputReference("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", containerAppEnvironment.Resource).ValueExpression
                         .Replace('.', '_').Replace('-', '_').Replace("{", "").Replace("}", "").ToLower()!;
 
-                var appWithKind = new ContainerAppWithKind(app.BicepIdentifier);
-                appWithKind.Kind = "functionapp";
-                appWithKind.ResourceVersion = "2024-10-02-preview";
+                var appWithKind = new ContainerAppWithKind(app.BicepIdentifier, "2024-10-02-preview");
                 appWithKind.Name = builder.Resource.Name;
+                appWithKind.Kind = "functionapp";
+
                 appWithKind.Identity = new ManagedServiceIdentity() { ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned };
                 appWithKind.Identity.UserAssignedIdentities.Add(new InterpolatedStringExpression([new IdentifierExpression(builder.Resource.Name + "_identity_outputs_id")]).ToString(), new UserAssignedIdentityDetails());
                 appWithKind.Identity.UserAssignedIdentities.Add(new InterpolatedStringExpression([new IdentifierExpression(paramRegistryIdentity)] ).ToString(), new UserAssignedIdentityDetails());
@@ -54,13 +54,10 @@ namespace FunctionsAspireApril.AppHost.Extensions
                     Scale = new ContainerAppScale() { MinReplicas = 1}
                 };
 
-                var container = new ContainerAppContainer()
+                foreach (var container in app.Template.Containers)
                 {
-                    Image = new IdentifierExpression(builder.Resource.Name + "_containerimage"),
-                    Name = builder.Resource.Name
-                };
-
-                appWithKind.Template.Containers.Add(container);
+                    appWithKind.Template.Containers.Add(container);
+                }
 
                 infra.Remove(app);
                 infra.Add(appWithKind);
