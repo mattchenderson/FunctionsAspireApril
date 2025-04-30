@@ -25,7 +25,7 @@ namespace FunctionsAspireApril.AppHost.Extensions
                 var paramRegistryIdentity = new BicepOutputReference("AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID", containerAppEnvironment.Resource).ValueExpression
                         .Replace('.', '_').Replace('-', '_').Replace("{", "").Replace("}", "").ToLower()!;
 
-                var appWithKind = new ContainerAppWithKind(app.BicepIdentifier, "2024-10-02-preview");
+                var appWithKind = new ContainerAppWithKind(app.BicepIdentifier, "2025-01-01");
                 appWithKind.Name = builder.Resource.Name;
                 appWithKind.Kind = "functionapp";
 
