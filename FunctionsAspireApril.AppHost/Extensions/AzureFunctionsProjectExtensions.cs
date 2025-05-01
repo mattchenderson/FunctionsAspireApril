@@ -39,9 +39,9 @@ namespace FunctionsAspireApril.AppHost.Extensions
                     ActiveRevisionsMode = ContainerAppActiveRevisionsMode.Single,
                     Ingress = new ContainerAppIngressConfiguration()
                     {
-                        External = false,
-                        TargetPort = 8080,
-                        Transport = ContainerAppIngressTransportMethod.Http,
+                        External = app.Configuration.Ingress.External.Value,
+                        TargetPort = app.Configuration.Ingress.TargetPort.Value,
+                        Transport = app.Configuration.Ingress.Transport.Value,
                     }
                 };
                 appWithKind.Configuration.Registries.Add(new ContainerAppRegistryCredentials()

@@ -38,6 +38,7 @@ builder.AddAzureFunctionsProject<Projects.FunctionsAspireApril>("functionsaspire
     .WithRoleAssignments(appStorage, 
         StorageBuiltInRole.StorageBlobDataOwner,
         StorageBuiltInRole.StorageQueueDataContributor)
-    .PublishAsACANativeFunctions(containerAppEnvironment);
+    .PublishAsACANativeFunctions(containerAppEnvironment)
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();
